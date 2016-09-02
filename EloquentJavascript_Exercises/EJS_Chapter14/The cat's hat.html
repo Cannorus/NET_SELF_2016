@@ -1,0 +1,28 @@
+<!doctype html>
+
+<body style="min-height: 400px">
+
+<img src="cat.png" id="cat" style="position: absolute">
+<img src="hat.png" id="hat" style="position: absolute">
+
+<script>
+  var cat = document.querySelector("#cat");
+  var hat = document.querySelector("#hat");
+
+  var angle_cat = 0,angle_hat = 0, lastTime = null;
+  function animate(time) {
+    if (lastTime != null)
+    {
+      angle_cat += (time - lastTime) * 0.001;
+      angle_hat -= (time - lastTime) * 0.001;
+    }
+    lastTime = time;
+    cat.style.top = (Math.sin(angle_cat) * 20+100) + "px";
+    cat.style.left = (Math.cos(angle_cat) * 20+100) + "px";
+    hat.style.top = (Math.sin(angle_hat) * 100+120) + "px";
+    hat.style.left = (Math.cos(angle_hat) * 100+100) + "px";    
+    requestAnimationFrame(animate);
+  }
+  requestAnimationFrame(animate);  
+  
+</script>
