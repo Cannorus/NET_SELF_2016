@@ -1,0 +1,41 @@
+<!doctype html>
+
+<canvas width="600" height="300"></canvas>
+<script>
+  var results = [
+    {name: "Satisfied", count: 1043, color: "lightblue"},
+    {name: "Neutral", count: 563, color: "lightgreen"},
+    {name: "Unsatisfied", count: 510, color: "pink"},
+    {name: "No comment", count: 175, color: "silver"}
+  ];
+
+
+  var cx = document.querySelector("canvas").getContext("2d");
+  var total = results.reduce(function(sum, choice) {
+    return sum + choice.count;
+  }, 0);
+
+  var currentAngle = -0.5 * Math.PI;
+  var centerX = 300, centerY = 150;
+  results.forEach(function(result) {
+    var sliceAngle = (result.count / total) * 2 * Math.PI;
+    cx.beginPath();
+    cx.arc(centerX, centerY, 100,
+           currentAngle, currentAngle + sliceAngle);
+    
+    var mid = currentAngle + sliceAngle/2;
+    var x = Math.cos(mid)*120 + centerX;
+    var y = Math.sin(mid)*120 + centerY;
+    if (Math.cos(mid) > 0)
+      cx.textAlign = "left";
+    else
+      cx.textAlign = "right";
+    cx.fillStyle = "black"
+    cx.fillText(result.name,x,y);
+    
+    currentAngle += sliceAngle;
+    cx.lineTo(centerX, centerY);
+    cx.fillStyle = result.color;
+    cx.fill();
+  });
+</script>

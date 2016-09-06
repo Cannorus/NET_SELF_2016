@@ -1,0 +1,73 @@
+<!doctype html>
+
+<canvas width="600" height="200"></canvas>
+<script>
+  var cx = document.querySelector("canvas").getContext("2d");
+  
+  function parallelogram(x,y){
+    cx.beginPath();
+    cx.moveTo(x,y);
+    cx.lineTo(x+50,y);
+    cx.lineTo(x+70,y+50);
+    cx.lineTo(x-20,y+50);
+    cx.closePath();
+    cx.stroke();
+  }
+  
+  parallelogram(40,30);
+  
+  function diamond(x,y){
+    cx.save();
+    cx.translate(x+30,y+30);
+    cx.rotate((Math.PI/180)*45);
+    cx.fillStyle = "red";    
+    cx.fillRect(-30,-30,60,60);
+    cx.restore();
+  }
+  
+  diamond(150,30);
+  
+  function zigzag(x,y){
+    cx.beginPath();
+    cx.moveTo(x,y);
+    for(var i = 0; i < 6; i++){
+      cx.lineTo(x+80, y + i*12 + 6);
+      cx.lineTo(x, y + i*12 + 12);
+    }
+    cx.stroke();
+  }
+  
+  zigzag(250,30);
+  
+  function spiral(x, y) {
+    var radius = 50, xc = x + radius, yc = y + radius;
+    cx.beginPath();
+    cx.moveTo(xc, yc);
+    for (var i = 0; i < 190; i++) {
+      var angle = i * Math.PI / 30;
+      var dist = radius * i / 190;
+      cx.lineTo(xc + Math.cos(angle) * dist,
+                yc + Math.sin(angle) * dist);
+    }
+    cx.stroke();
+  }
+  
+  spiral(340, 20);  
+
+  function star(x, y) {
+    var radius = 50, xc = x + radius, yc = y + radius;
+    cx.beginPath();
+    cx.moveTo(xc + radius, yc);
+    for (var i = 1; i <= 8; i++) {
+      var angle = i * Math.PI / 4;
+      cx.quadraticCurveTo(xc, yc,
+                          xc + Math.cos(angle) * radius,
+                          yc + Math.sin(angle) * radius);
+    }
+    cx.fillStyle = "orange";
+    cx.fill();
+  }
+  
+  star(450, 20);  
+ 
+</script>

@@ -1,0 +1,35 @@
+<!doctype html>
+
+<canvas width="400" height="400"></canvas>
+<script>
+  var cx = document.querySelector("canvas").getContext("2d");
+
+  var lastTime = null;
+  function frame(time) {
+    if (lastTime != null)
+      updateAnimation(Math.min(100, time - lastTime) / 1000);
+    lastTime = time;
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+  
+  var speedX = 50, speedY = 60;
+  var x = 100, y = 200;
+
+  function updateAnimation(step) {
+    cx.clearRect(0,0,400,400);
+    cx.strokeStyle = "blue";
+    cx.strokeRect(0,0,400,400);
+    
+    x += speedX * step;
+    y += speedY * step;
+    
+    if (x < 20 || x > 380)
+      speedX = -speedX;
+    if (y < 20 || y > 380)
+      speedY = -speedY;
+    cx.beginPath();
+    cx.arc(x,y,20,0,7);
+    cx.fill();
+  }
+</script>
