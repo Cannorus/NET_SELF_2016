@@ -1,0 +1,13 @@
+<!doctype html>
+
+<input type="text">
+<script>
+  var field = document.querySelector("input");  
+  field.addEventListener("keypress",function(event){
+    var reg = /[QWX]/i;
+    var s = String.fromCharCode(event.charCode);
+    if (s.search(reg) != -1)
+  		event.preventDefault();  
+  });
+  
+</script>
