@@ -1,0 +1,20 @@
+<!doctype html>
+<script src="code/promise.js"></script>
+
+<textarea id="code">return "hi";</textarea>
+<button onclick="buttonClick()" id="button">Run</button>
+<pre id="output"></pre>
+
+<script>
+  function buttonClick(){
+    var code = document.querySelector("#code");
+    var output = document.querySelector("#output");
+    try{
+      var result = new Function(code.value)();
+      output.textContent = String(result);
+    }
+    catch(e){
+      output.textContent = String(e);
+    }        
+  }
+</script>

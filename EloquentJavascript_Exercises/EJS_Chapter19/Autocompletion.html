@@ -1,0 +1,42 @@
+<!doctype html>
+<script src="code/promise.js"></script>
+
+<input type="text" id="field">
+<div>
+ <div id="_suggestions" class="block" style="display: none">
+   <select id="_variants">
+   </select>
+ </div>
+</div>
+<style>
+  .block { display:inline-block;vertical-align:top ;overflow:hidden; border:solid lightgrey 1px; }
+  select { padding:10px; margin:-5px -20px -5px -5px; }
+</style>
+<script>
+  var terms = [];
+  for (var name in window)
+    terms.push(name);
+  
+  var textfield = document.querySelector("#field");
+  var variants = document.querySelector("#_variants");
+  var suggestions = document.querySelector("#_suggestions");
+  
+  textfield.addEventListener("input",function(){
+    var match = terms.filter(function(term){
+      return term.indexOf(textfield.value) == 0
+    });
+    variants.innerHTML = "";
+    variants.size = match.length;
+    suggestions.style.display = "";
+    match.forEach(function(term){
+      var item = document.createElement("option");
+      item.text = term;
+      item.addEventListener("click",function(){
+        textfield.value = term;
+        variants.innerHTML = "";
+        suggestions.style.display = "none";
+      });
+      variants.appendChild(item);
+    });
+  });
+</script>
