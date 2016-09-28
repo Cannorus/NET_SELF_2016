@@ -1,0 +1,40 @@
+<!doctype html>
+<script src="19_paint.js"></script>
+
+<script>
+
+  tools.Rectangle = function(event, cx) {
+    var relativeStart = relativePos(event, cx.canvas);
+    var startPos = {x: event.pageX, y: event.pageY};
+
+    var tempRec = document.createElement("div");
+    tempRec.style.position = "absolute";
+    tempRec.style.background = cx.fillStyle;
+    document.body.appendChild(tempRec);
+
+    trackDrag(function(event) {
+      var rect = rectangleFrom(startPos, {x: event.pageX, y: event.pageY});
+      tempRec.style.left = rect.left + "px";
+      tempRec.style.top = rect.top + "px";
+      tempRec.style.width = rect.width + "px";
+      tempRec.style.height = rect.height + "px";
+    }, function(event) {
+      var rect = rectangleFrom(relativeStart, relativePos(event, cx.canvas));
+      cx.fillRect(rect.left, rect.top, rect.width, rect.height);
+      document.body.removeChild(tempRec);
+    });
+  };
+
+  function rectangleFrom(w, h) {
+    return {left: Math.min(w.x, h.x),
+            top: Math.min(w.y, h.y),
+            width: Math.abs(w.x - h.x),
+            height: Math.abs(w.y - h.y)};
+  }
+
+</script>
+
+<link rel="stylesheet" href="paint.css">
+<body>
+  <script>createPaint(document.body);</script>
+</body>
